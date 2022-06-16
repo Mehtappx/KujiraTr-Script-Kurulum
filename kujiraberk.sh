@@ -1,15 +1,14 @@
 #!/bin/bash
 echo "=================================================="
 echo -e "\033[0;35m"
-echo "         __                          __                        ____  _____                  __          
-echo "        [  |                        [  |  _                   |_   \|_   _|                |  ]         
-echo "         | |.--.    .---.   _ .--.   | | / ]   .---.   ,--.     |   \ | |     .--.     .--.| |   .---.  
-echo "         | '/'`\ \ / /__\\ [ `/'`\]  | '' <   / /'`\] `'_\ :    | |\ \| |   / .'`\ \ / /'`\' |  / /__\\ 
-echo "         |  \__/ | | \__.,  | |      | |`\ \  | \__.  // | |,  _| |_\   |_  | \__. | | \__/  |  | \__., 
-echo "        [__;.__.'   '.__.' [___]    [__|  \_] '.___.' \'-;__/ |_____|\____|  '.__.'   '.__.;__]  '.__.' 
+echo " | \ | |         | |    (_)   | |  ";
+echo " |  \| | ___   __| | ___ _ ___| |_ ";
+echo " |     |/ _ \ / _  |/ _ \ / __| __| ";
+echo " | |\  | (_) | (_| |  __/ \__ \ |_ ";
+echo " |_| \_|\___/ \__,_|\___|_|___/\__| ";
 echo -e "\e[0m"
-echo "=================================================="
-sleep 3
+echo "=================================================="                                                            
+sleep 2
 
 # set vars
 if [ ! $NODENAME ]; then
@@ -115,6 +114,6 @@ sudo systemctl daemon-reload
 sudo systemctl enable kujirad
 sudo systemctl restart kujirad
 
-echo '=============== SETUP FINISHED ==================='
+echo '=============== KURULUM TAMAMLANDI ==================='
 echo -e 'Loglarinizi kontrol edin: \e[1m\e[32mjournalctl -u kujirad -f -o cat\e[0m'
 echo -e 'Eslesme durumunuzu kontrol edin: \e[1m\e[32mcurl -s localhost:26657/status | jq .result.sync_info\e[0m'
