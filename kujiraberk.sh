@@ -24,17 +24,17 @@ echo "export CHAIN_ID=harpoon-4" >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
 echo '================================================='
-echo 'Your node name: ' $NODENAME
-echo 'Your wallet name: ' $WALLET
-echo 'Your chain name: ' $CHAIN_ID
+echo 'Node isminiz  : ' $NODENAME
+echo 'Cuzdan isminiz: ' $WALLET
+echo 'Ag adi        : ' $CHAIN_ID
 echo '================================================='
 sleep 2
 
-echo -e "\e[1m\e[32m1. Updating packages... \e[0m" && sleep 1
+echo -e "\e[1m\e[32m1. Paketler Guncelleniyor... \e[0m" && sleep 1
 # update
 sudo apt update && sudo apt upgrade -y
 
-echo -e "\e[1m\e[32m2. Installing dependencies... \e[0m" && sleep 1
+echo -e "\e[1m\e[32m2. Bagımlılıklar Yukleniyor... \e[0m" && sleep 1
 # packages
 sudo apt install curl build-essential git wget jq make gcc tmux -y
 
