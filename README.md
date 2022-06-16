@@ -75,7 +75,7 @@ source $HOME/.bash_profile
 
 ### Cuzdanınıza jeton alın
 Dogrulayıcı olusturmak icin once cuzdanınıza testnet jetonlari almaniz gerekir.
-Cuzdanınıza jeton almak için [Kujira discord server]([(https://discord.gg/TdQEj2Jy)]katılın ve **#faucet-requests** kanalina gidin
+Cuzdanınıza jeton almak için [Kujira discord server](https://discord.gg/TdQEj2Jy) katılın ve **#faucet-requests** kanalina gidin
 
 Musluktan jeton talep etmek için:
 ```
