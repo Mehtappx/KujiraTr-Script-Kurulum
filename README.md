@@ -1,0 +1,1 @@
+# KujiraTr-Script-Kurulum
