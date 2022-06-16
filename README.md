@@ -16,15 +16,16 @@ Gezgin:
 >-  https://kujira.explorers.guru/
 
 
-## Hardware Requirements
-Like any Cosmos-SDK chain, the hardware requirements are pretty modest.
+## Donanım Gereksinimleri
+Herhangi bir Cosmos-SDK zinciri gibi, donanım gereksinimleri de oldukça mütevazı.
 
-### Minimum Hardware Requirements
+
+### Minimum donanım gereksinimleri
  - 3x CPUs
  - 4GB RAM
  - 80GB Disk
  
-### Optimal Hardware Requirements 
+### Optimum sistem gereksinimleri
  - 4x CPUs
  - 8GB RAM
  - 200GB of storage (SSD or NVME)
