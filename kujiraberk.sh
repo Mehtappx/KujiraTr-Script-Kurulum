@@ -1,14 +1,18 @@
 #!/bin/bash
-echo "=================================================="
-echo -e "\033[0;35m"
-echo " | \ | |         | |    (_)   | |  ";
-echo " |  \| | ___   __| | ___ _ ___| |_ ";
-echo " |     |/ _ \ / _  |/ _ \ / __| __| ";
-echo " | |\  | (_) | (_| |  __/ \__ \ |_ ";
-echo " |_| \_|\___/ \__,_|\___|_|___/\__| ";
-echo -e "\e[0m"
-echo "=================================================="                                                            
-sleep 2
+exists()
+{
+  command -v "$1" >/dev/null 2>&1
+}
+if exists curl; then
+echo ''
+else
+  sudo apt update && sudo apt install curl -y < "/dev/null"
+fi
+bash_profile=$HOME/.bash_profile
+if [ -f "$bash_profile" ]; then
+    . $HOME/.bash_profile
+fi
+sleep 1 && curl -s https://raw.githubusercontent.com/berkcaNode/KujiraTr-Script-Kurulum/main/logo.sh 
 
 # set vars
 if [ ! $NODENAME ]; then
@@ -114,6 +118,6 @@ sudo systemctl daemon-reload
 sudo systemctl enable kujirad
 sudo systemctl restart kujirad
 
-echo '=============== KURULUM TAMAMLANDI ==================='
+echo '=============== SETUP FINISHED ==================='
 echo -e 'Loglarinizi kontrol edin: \e[1m\e[32mjournalctl -u kujirad -f -o cat\e[0m'
 echo -e 'Eslesme durumunuzu kontrol edin: \e[1m\e[32mcurl -s localhost:26657/status | jq .result.sync_info\e[0m'
