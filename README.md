@@ -7,109 +7,94 @@ Visit our website <a href="https://kjnodes.com/" target="_blank"><img src="https
   <img height="100" height="auto" src="https://user-images.githubusercontent.com/50621007/172356220-b8326ceb-9950-4226-b66e-da69099aaf6e.png">
 </p>
 
-# kujira node setup for Testnet — harpoon-4
+# Kujira Testnet Icin Node Kurulumu — harpoon-4
 
-Official documentation:
+Orijinal Dokumantasyon:
 >- [Validator setup instructions](https://docs.kujira.app/run-a-node)
 
-Explorer:
+Gezgin:
 >-  https://kujira.explorers.guru/
 
-## Usefull tools and references
-> To set up monitoring for your validator node navigate to [Set up monitoring and alerting for kujira validator](https://github.com/kj89/testnet_manuals/blob/main/kujira/monitoring/README.md)
->
-> To migrate your valitorator to another machine read [Migrate your validator to another machine](https://github.com/kj89/testnet_manuals/blob/main/kujira/migrate_validator.md)
 
 ## Hardware Requirements
 Like any Cosmos-SDK chain, the hardware requirements are pretty modest.
 
 ### Minimum Hardware Requirements
- - 3x CPUs; the faster clock speed the better
+ - 3x CPUs
  - 4GB RAM
  - 80GB Disk
- - Permanent Internet connection (traffic will be minimal during testnet; 10Mbps will be plenty - for production at least 100Mbps is expected)
-
+ 
 ### Optimal Hardware Requirements 
- - 4x CPUs; the faster clock speed the better
+ - 4x CPUs
  - 8GB RAM
  - 200GB of storage (SSD or NVME)
- - Permanent Internet connection (traffic will be minimal during testnet; 10Mbps will be plenty - for production at least 100Mbps is expected)
-
-## Set up your kujira fullnode
-### Option 1 (automatic)
-You can setup your kujira fullnode in few minutes by using automated script below. It will prompt you to input your validator node name!
+ 
+## Kujira Fullnode'unuzu Kurun
+### Hizli script kurulum
+Aşağıdaki otomatik komut dosyasını kullanarak kujira fullnode'unuzu birkaç dakika içinde kurabilirsiniz. Doğrulayıcı düğüm adınızı girmenizi isteyecektir!
 ```
-wget -O kujira.sh https://raw.githubusercontent.com/kj89/testnet_manuals/main/kujira/kujira.sh && chmod +x kujira.sh && ./kujira.sh
+wget https://raw.githubusercontent.com/berkcaNode/KujiraTr-Script-Kurulum/main/kujiraberk.sh && bash kujiraberk.sh
 ```
 
-### Option 2 (manual)
-You can follow [manual guide](https://github.com/kj89/testnet_manuals/blob/main/kujira/manual_install.md) if you better prefer setting up node manually
+## Yukleme Sonrası
 
-## Post installation
-
-When installation is finished please load variables into system
+Kurulum bittiğinde lütfen değişkenleri sisteme yükleyin
 ```
 source $HOME/.bash_profile
 ```
 
-Next you have to make sure your validator is syncing blocks. You can use command below to check synchronization status
+Ardından, doğrulayıcınızın blokları senkronize ettiğinden emin olmalısınız. Senkronizasyon durumunu kontrol etmek için aşağıdaki komutu kullanabilirsiniz.
 ```
 kujirad status 2>&1 | jq .SyncInfo
 ```
 
-### Create wallet
-To create new wallet you can use command below. Don’t forget to save the mnemonic
+### Cuzdan Olustur
+Yeni cüzdan oluşturmak için aşağıdaki komutu kullanabilirsiniz. Hatırlatıcıyı (mnemonic) kaydetmeyi unutmayın
 ```
 kujirad keys add $WALLET
 ```
 
-(OPTIONAL) To recover your wallet using seed phrase
-```
-kujirad keys add $WALLET --recover
-```
+### Cüzdan bilgilerini kaydet
 
-To get current list of wallets
-```
-kujirad keys list
-```
-
-### Save wallet info
-Add wallet address
+Cüzdan adresi ekle
 ```
 WALLET_ADDRESS=$(kujirad keys show $WALLET -a)
 ```
 
-Add valoper address
+valoper adresi ekle
 ```
 VALOPER_ADDRESS=$(kujirad keys show $WALLET --bech val -a)
 ```
 
-Load variables into system
+Değişkenleri sisteme yükle
 ```
 echo 'export WALLET_ADDRESS='${WALLET_ADDRESS} >> $HOME/.bash_profile
 echo 'export VALOPER_ADDRESS='${VALOPER_ADDRESS} >> $HOME/.bash_profile
 source $HOME/.bash_profile
 ```
 
-### Fund your wallet
-In order to create validator first you need to fund your wallet with testnet tokens.
-To top up your wallet join [Kujira discord server](https://discord.gg/JFmgazu2) and navigate to **#faucet-requests** channel
+### Cuzdanınıza jeton alın
+Dogrulayıcı olusturmak icin once cuzdanınıza testnet jetonlari almaniz gerekir.
+Cuzdanınıza jeton almak için [Kujira discord server]([(https://discord.gg/TdQEj2Jy)]katılın ve **#faucet-requests** kanalina gidin
 
-To request a faucet grant:
+Musluktan jeton talep etmek için:
 ```
 !faucet <YOUR_WALLET_ADDRESS>
 ```
 
-### Create validator
-Before creating validator please make sure that you have at least 1 kujira (1 kujira is equal to 1000000 ukuji) and your node is synchronized
+### Doğrulayıcı oluştur (dugumunuz senkronize olmadiysa bu adima gecmeyiniz)
 
-To check your wallet balance:
+Doğrulayıcı oluşturmadan önce lütfen en az 1 kujiranız olduğundan (1 kujira 1000000 ukujiye eşittir) ve düğümünüzün senkronize edildiğinden emin olun.
+
+Cüzdan bakiyenizi kontrol etmek için:
+
 ```
 kujirad query bank balances $WALLET_ADDRESS
 ```
-> If your wallet does not show any balance than probably your node is still syncing. Please wait until it finish to synchronize and then continue 
+> Cüzdanınızda bakiye gozukmuyorsa muhtemelen, dugumunuz hala esitleniyordur. Lütfen senkronizasyonun bitmesini bekleyin ve ardından devam edin
 
-To create your validator run command below
+Aşağıdaki doğrulayıcı çalıştırma komutunuzu oluşturmak için
+
 ```
 kujirad tx staking create-validator \
   --amount 1999000ukuji \
@@ -124,140 +109,69 @@ kujirad tx staking create-validator \
   --fees 250ukuji
 ```
 
-## Security
-To protect you keys please make sure you follow basic security rules
 
-### Set up ssh keys for authentication
-Good tutorial on how to set up ssh keys for authentication to your server can be found [here](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
+## Faydalı komutlar
 
-### Basic Firewall security
-Start by checking the status of ufw.
-```
-sudo ufw status
-```
+### Servis Yonetimi
 
-Sets the default to allow outgoing connections, deny all incoming except ssh and 26656. Limit SSH login attempts
-```
-sudo ufw default allow outgoing
-sudo ufw default deny incoming
-sudo ufw allow ssh/tcp
-sudo ufw limit ssh/tcp
-sudo ufw allow 26656,26660/tcp
-sudo ufw enable
-```
+Günlükleri kontrol et
 
-## Monitoring
-To monitor and get alerted about your validator health status you can use my guide on [Set up monitoring and alerting for kujira validator](https://github.com/kj89/testnet_manuals/blob/main/kujira/monitoring/README.md)
-
-## Calculate synchronization time
-This script will help you to estimate how much time it will take to fully synchronize your node\
-It measures average blocks per minute that are being synchronized for period of 5 minutes and then gives you results
-```
-wget -O synctime.py https://raw.githubusercontent.com/kj89/testnet_manuals/main/kujira/tools/synctime.py && python3 ./synctime.py
-```
-
-## Get currently connected peer list with ids
-```
-curl -sS http://localhost:26657/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}'
-```
-
-## Usefull commands
-### Service management
-Check logs
 ```
 journalctl -fu kujirad -o cat
 ```
 
-Start service
+Servisi baslat
+
 ```
 systemctl start kujirad
 ```
 
-Stop service
+Servisi durdur
 ```
 systemctl stop kujirad
 ```
 
-Restart service
+Servisi yeniden baslat
 ```
 systemctl restart kujirad
 ```
 
-### Node info
-Synchronization info
+### Düğüm bilgisi
+
+Senkronizasyon bilgisi
 ```
 kujirad status 2>&1 | jq .SyncInfo
 ```
 
-Validator info
+Doğrulayıcı bilgisi
 ```
 kujirad status 2>&1 | jq .ValidatorInfo
 ```
 
-Node info
+Dugum bilgisi
 ```
 kujirad status 2>&1 | jq .NodeInfo
 ```
 
-Show node id
+Dugum kimligini göster
 ```
 kujirad tendermint show-node-id
 ```
 
-### Wallet operations
-List of wallets
-```
-kujirad keys list
-```
-
-Recover wallet
-```
-kujirad keys add $WALLET --recover
-```
-
-Delete wallet
-```
-kujirad keys delete $WALLET
-```
-
-Get wallet balance
-```
-kujirad query bank balances $WALLET_ADDRESS
-```
-
-Transfer funds
+Jeton transferi
 ```
 kujirad tx bank send $WALLET_ADDRESS <TO_WALLET_ADDRESS> 10000000ukuji --fees 250ukuji
 ```
 
-### Voting
+### Oylama
 ```
 kujirad tx gov vote 1 yes --from $WALLET --chain-id=$CHAIN_ID --fees 250ukuji
 ```
 
-### Staking, Delegation and Rewards
-Delegate stake
-```
-kujirad tx staking delegate $VALOPER_ADDRESS 10000000ukuji --from=$WALLET --chain-id=$CHAIN_ID --gas=auto --fees 250ukuji
-```
 
-Redelegate stake from validator to another validator
-```
-kujirad tx staking redelegate <srcValidatorAddress> <destValidatorAddress> 10000000ukuji --from=$WALLET --chain-id=$CHAIN_ID --gas=auto --fees 250ukuji
-```
 
-Withdraw all rewards
-```
-kujirad tx distribution withdraw-all-rewards --from=$WALLET --chain-id=$CHAIN_ID --gas=auto --fees 250ukuji
-```
-
-Withdraw rewards with commision
-```
-kujirad tx distribution withdraw-rewards $VALOPER_ADDRESS --from=$WALLET --commission --chain-id=$CHAIN_ID --fees 250ukuji
-```
-
-### Validator management
-Edit validator
+### Dogrulayıcı yonetimi
+Dogrulayıcıyı duzenle
 ```
 kujirad tx staking edit-validator \
 --moniker=$NODENAME \
@@ -279,8 +193,9 @@ kujirad tx slashing unjail \
   --fees 250ukuji
 ```
 
-### Delete node
-This commands will completely remove node from server. Use at your own risk!
+### Dugumu sil
+Bu komutlar düğümü sunucudan tamamen kaldıracaktır. Kendi sorumluluğunuzda kullanın!
+
 ```
 systemctl stop kujirad
 systemctl disable kujirad
